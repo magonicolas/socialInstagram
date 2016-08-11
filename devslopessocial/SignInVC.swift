@@ -13,6 +13,10 @@ import Firebase
 
 class SignInVC: UIViewController {
 
+    @IBOutlet weak var emailField: FancyField!
+    
+    @IBOutlet weak var passwordField: FancyField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -39,6 +43,31 @@ class SignInVC: UIViewController {
                 let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                 self.firebaseAuth(credential)
             }
+        }
+    }
+    
+    @IBAction func signInTapped(_ sender: AnyObject)
+    {
+        if let email = emailField.text, let password = passwordField.text
+        {
+            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                if error == nil
+                {
+                    print("Mago: Email user authenticated with Firebase")
+                } else
+                {
+                    FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                        
+                        if error != nil
+                        {
+                            print("Mago: Unable to authenticate with Firebase using email: \(error.debugDescription)")
+                        } else
+                        {
+                            print("Mago: Successfully created and authenticated with Firebase email")
+                        }
+                    })
+                }
+            })
         }
     }
     
