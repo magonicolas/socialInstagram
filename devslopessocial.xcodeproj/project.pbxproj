@@ -34,6 +34,7 @@
 		603A2BA31D5BDB0F0026B4B4 /* FancyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyView.swift; sourceTree = "<group>"; };
 		603A2BA61D5BDB880026B4B4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		603A2BA81D5BE4990026B4B4 /* RoundButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
+		60E97C301D5D101A00C71938 /* devslopessocial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = devslopessocial.entitlements; sourceTree = "<group>"; };
 		60F66FE91D5CFA690093BC5D /* FancyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyField.swift; sourceTree = "<group>"; };
 		60F66FEB1D5CFC200093BC5D /* FancyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FancyButton.swift; sourceTree = "<group>"; };
 		E8014C7C22640C7714629923 /* Pods-devslopessocial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-devslopessocial.release.xcconfig"; path = "Pods/Target Support Files/Pods-devslopessocial/Pods-devslopessocial.release.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		6018DFC61D5BC382005FCCCD /* devslopessocial */ = {
 			isa = PBXGroup;
 			children = (
+				60E97C301D5D101A00C71938 /* devslopessocial.entitlements */,
 				603A2BA51D5BDB780026B4B4 /* Util */,
 				603A2BA01D5BCA280026B4B4 /* Model */,
 				603A2BA11D5BCA2C0026B4B4 /* View */,
@@ -176,6 +178,11 @@
 						DevelopmentTeam = LQHQ845W9M;
 						DevelopmentTeamName = "ePig Games Spa";
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -390,6 +397,7 @@
 			baseConfigurationReference = 15C7CB1237A081D8CAA0D6D7 /* Pods-devslopessocial.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = devslopessocial/devslopessocial.entitlements;
 				INFOPLIST_FILE = devslopessocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.epigames.devslopessocial;
@@ -403,6 +411,7 @@
 			baseConfigurationReference = E8014C7C22640C7714629923 /* Pods-devslopessocial.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = devslopessocial/devslopessocial.entitlements;
 				INFOPLIST_FILE = devslopessocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.epigames.devslopessocial;
