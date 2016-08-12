@@ -10,6 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 import Firebase
+import SwiftKeychainWrapper
 
 class SignInVC: UIViewController {
 
@@ -19,12 +20,18 @@ class SignInVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        if let _ = KeychainWrapper.stringForKey(key_uid)
+        {
+            print("Mago: ID found in Keychain")
+            performSegue(withIdentifier: "goToFeed", sender: nil)
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func fbButtonTapped(_ sender: AnyObject)
@@ -54,6 +61,10 @@ class SignInVC: UIViewController {
                 if error == nil
                 {
                     print("Mago: Email user authenticated with Firebase")
+                    if let user = user
+                    {
+                        self.completeSignIn(id: user.uid)
+                    }
                 } else
                 {
                     FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
@@ -64,6 +75,10 @@ class SignInVC: UIViewController {
                         } else
                         {
                             print("Mago: Successfully created and authenticated with Firebase email")
+                            if let user = user
+                            {
+                                self.completeSignIn(id: user.uid)
+                            }
                         }
                     })
                 }
@@ -80,8 +95,20 @@ class SignInVC: UIViewController {
             } else
             {
                 print("Mago: Successfully authenticated with Firebase")
+                if let user = user
+                {
+                    self.completeSignIn(id: user.uid)
+                }
+
             }
         })
+    }
+    
+    func completeSignIn (id: String)
+    {
+        let keychainResult = KeychainWrapper.setString(id, forKey: key_uid)
+        print("Mago: Data saved to keychain \(keychainResult)")
+        performSegue(withIdentifier: "goToFeed", sender: nil)
     }
 
 }
