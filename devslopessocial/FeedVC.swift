@@ -14,11 +14,42 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
 
     @IBOutlet weak var imageAdd: CircleView!
     
+    @IBOutlet weak var captionField: FancyField!
     @IBOutlet weak var tableView: UITableView!
     
     var posts = [Post]()
     var imagePicker: UIImagePickerController!
     static var imageCache: Cache<NSString, UIImage> = Cache()
+    var imageSelected = false
+    
+    @IBAction func postBtnTapped(_ sender: AnyObject)
+    {
+        guard let caption = captionField.text, caption != "" else {
+            print("Mago: Caption must be entered")
+            return
+        }
+        guard let img = imageAdd.image, imageSelected == true else {
+            print("Mago: An Image must be selected")
+            return
+        }
+        
+        if let imgData = UIImageJPEGRepresentation(img, 0.2)
+        {
+            let imageUid = NSUUID().uuidString
+            let metadata = FIRStorageMetadata()
+            metadata.contentType = "image/jpeg"
+            DataService.ds.REF_POST_iMAGES.child(imageUid).put(imgData, metadata: metadata) { (metadata, error) in
+                if error != nil
+                {
+                    print("Mago: Unable to upload image to firebase storage")
+                } else
+                {
+                    print("Mago: Succesfully uploaded image to firebase storage")
+                    let downloadURL = metadata?.downloadURL()?.absoluteString
+                }
+            }
+        }
+    }
     
     @IBAction func addImagedTapped(_ sender: AnyObject)
     {
@@ -67,6 +98,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage
         {
             imageAdd.image = image
+            imageSelected = true
         } else
         {
             print("Mago: A valid image wasn`t selected")
