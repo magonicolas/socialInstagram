@@ -46,7 +46,7 @@ class Post
             self._caption = caption
         }
         
-        if let imageURL = postData["imageURL"] as? String
+        if let imageURL = postData["imageUrl"] as? String
         {
             self._imageURL = imageURL
         }
